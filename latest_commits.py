@@ -13,8 +13,8 @@ if not ACCESS_TOKEN:
 g = Github(ACCESS_TOKEN)
 
 
-repo = g.get_repo("f{user_name}/{repo_name}")
-print(repo)
+repo = g.get_repo(f"{user_name}/{repo_name}")
 commits = repo.get_commits()[0]
+print(commits)
 
 #print(commits)
