@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,render_template
 import os
 from dotenv import load_dotenv
 from github import Github
@@ -12,7 +12,7 @@ GITHUB_USERNAME = os.getenv("GITHUB_USERNAME")
 GITHUB_REPO = os.getenv("GITHUB_REPO")
 
 # Flask App
-app = Flask(__name__)
+app = Flask(__name__,template_folder="templates/")
 
 @app.route("/")
 def index():
@@ -39,12 +39,9 @@ def index():
         if stored_latest_commit != latest_commit.sha:
             previous_commit = stored_latest_commit if stored_latest_commit is not None else "None"
             with open(new_commit_file, "w") as f:
-                f.write(latest_commit.sha + "\n")
-                f.write(previous_commit + "\n")
-            return f"New commit detected. Updated new_commit.txt with latest commit."
-        else:
-            return f"No new commit found."
-
+                f.write("new-commit: " + latest_commit.sha + "\n")
+                f.write("previous-commit: " + previous_commit + "\n")
+        return render_template("index.html")
     except Exception as e:
         return f"Error: {e}", 500
 
