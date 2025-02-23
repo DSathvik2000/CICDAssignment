@@ -37,7 +37,7 @@ def index():
 
         # If the latest commit is different, it's new: create/update "new commit.txt"
         if last_commit_id != latest_commit.sha:
-            with open("new commit.txt", "w") as f:
+            with open("new_commit.txt", "w") as f:
                 f.write(latest_commit.sha)
             # Update the stored commit for future comparisons
             with open(last_commit_file, "w") as f:
